@@ -25,10 +25,11 @@ NORM				=	@norminette
 HEADER				=	minitalk.h
 SRC_SERVER			=	server.c
 SRC_CLIENT			=	client.c
-SRC_BONUS			=
+SRC_SERVER_BONUS	=	server_bonus.c
+SRC_CLIENT_BONUS	=	client_bonus.c
 
 SRC					=	$(SRC_SERVER) $(SRC_CLIENT)
-SRC_B				=	$(SRC) $(SRC_BONUS)
+SRC_B				=	$(SRC_SERVER_BONUS) $(SRC_CLIENT_BONUS)
 
 OBJ					=	$(SRC:%.c=%.o)
 OBJ_B				=	$(SRC_B:%.c=%.o)
@@ -54,6 +55,17 @@ $(CLIENT): $(FT_PRINTF) $(SRC_CLIENT)
 	$(CC) $(CFLAGS) $(SRC_CLIENT) $(FT_PRINTF) -o $(CLIENT)
 	@printf "$(_SUCCESS) $(CLIENT) successfully build.\n"
 
+#	Bonus
+bonus: fclean server_bonus client_bonus
+
+server_bonus: $(FT_PRINTF) $(SRC_SERVER_BONUS)
+	$(CC) $(CFLAGS) $(SRC_SERVER_BONUS) $(FT_PRINTF) -o $(SERVER)
+	@printf "$(_SUCCESS) $(SERVER)_bonus successfully build.\n"
+
+client_bonus: $(FT_PRINTF) $(SRC_CLIENT_BONUS)
+	$(CC) $(CFLAGS) $(SRC_CLIENT_BONUS) $(FT_PRINTF) -o $(CLIENT)
+	@printf "$(_SUCCESS) $(CLIENT)_bonus successfully build.\n"
+
 $(FT_PRINTF):
 	@make -C $(DIR_FT_PRINTF)
 
@@ -72,4 +84,4 @@ fclean: clean
 #	Call fclean -> all
 re: fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all, clean, fclean, re, bonus
